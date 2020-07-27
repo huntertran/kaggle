@@ -45,8 +45,6 @@ for feature in raw_features:
             home_data[feature].astype(str))
         features.append(new_feature_name)
 
-print(features)
-
 # Create X
 X = home_data[features]
 
@@ -91,16 +89,6 @@ test_data_path = './home-data-for-ml-course/test.csv'
 
 # read test data file using pandas
 test_data = pd.read_csv(test_data_path)
-
-# test_data['MSZoning_encoded'] = le.fit_transform(test_data['MSZoning'].astype(str))
-# test_data['LandSlope_encoded'] = le.fit_transform(test_data['LandSlope'].astype(str))
-# test_data['Neighborhood_encoded'] = le.fit_transform(test_data['Neighborhood'].astype(str))
-
-# test_data['Condition1_encoded'] = le.fit_transform(test_data['Condition1'].astype(str))
-# test_data['OverallQual_encoded'] = le.fit_transform(test_data['OverallQual'].astype(str))
-# test_data['OverallCond_encoded'] = le.fit_transform(test_data['OverallCond'].astype(str))
-# test_data['ExterCond_encoded'] = le.fit_transform(test_data['ExterCond'].astype(str))
-# test_data['MiscFeature_encoded'] = le.fit_transform(test_data['MiscFeature'].astype(str))
 
 for feature in raw_features:
     # print("Column: " + feature + " | " + "Data type: " + str(dataFrame[feature].dtypes))

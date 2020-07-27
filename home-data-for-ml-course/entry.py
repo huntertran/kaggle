@@ -10,11 +10,10 @@ from sklearn.impute import SimpleImputer
 # Set up code checking
 import os
 if not os.path.exists("../input/train.csv"):
-    os.symlink("../input/home-data-for-ml-course/train.csv", "../input/train.csv")  
-    os.symlink("../input/home-data-for-ml-course/test.csv", "../input/test.csv") 
-from learntools.core import binder
-binder.bind(globals())
-from learntools.machine_learning.ex7 import *
+    os.symlink("../input/home-data-for-ml-course/train.csv",
+               "../input/train.csv")
+    os.symlink("../input/home-data-for-ml-course/test.csv",
+               "../input/test.csv")
 
 # Path of the file to read. We changed the directory structure to simplify submitting to a competition
 iowa_file_path = '../input/train.csv'
@@ -28,21 +27,28 @@ home_data.fillna(0)
 
 le = LabelEncoder()
 
-home_data['MSZoning_encoded'] = le.fit_transform(home_data['MSZoning'].astype(str))
+home_data['MSZoning_encoded'] = le.fit_transform(
+    home_data['MSZoning'].astype(str))
 # home_data['Street_encoded'] = le.fit_transform(home_data['Street'].astype(str))
 # home_data['Alley_encoded'] = LabelEncoder().fit_transform(home_data['Alley'].astype(str))
 # home_data['Utilities_encoded'] = le.fit_transform(home_data['Utilities'].astype(str))
-home_data['LandSlope_encoded'] = le.fit_transform(home_data['LandSlope'].astype(str))
-home_data['Neighborhood_encoded'] = le.fit_transform(home_data['Neighborhood'].astype(str))
-home_data['Condition1_encoded'] = le.fit_transform(home_data['Condition1'].astype(str))
+home_data['LandSlope_encoded'] = le.fit_transform(
+    home_data['LandSlope'].astype(str))
+home_data['Neighborhood_encoded'] = le.fit_transform(
+    home_data['Neighborhood'].astype(str))
+home_data['Condition1_encoded'] = le.fit_transform(
+    home_data['Condition1'].astype(str))
 # home_data['Condition2_encoded'] = le.fit_transform(home_data['Condition2'].astype(str))
 # home_data['BldgType_encoded'] = le.fit_transform(home_data['BldgType'].astype(str))
 # home_data['HouseStyle_encoded'] = le.fit_transform(home_data['HouseStyle'].astype(str))
-home_data['OverallQual_encoded'] = le.fit_transform(home_data['OverallQual'].astype(str))
-home_data['OverallCond_encoded'] = le.fit_transform(home_data['OverallCond'].astype(str))
+home_data['OverallQual_encoded'] = le.fit_transform(
+    home_data['OverallQual'].astype(str))
+home_data['OverallCond_encoded'] = le.fit_transform(
+    home_data['OverallCond'].astype(str))
 # home_data['RoofMatl_encoded'] = le.fit_transform(home_data['RoofMatl'].astype(str))
 # home_data['ExterQual_encoded'] = le.fit_transform(home_data['ExterQual'].astype(str))
-home_data['ExterCond_encoded'] = le.fit_transform(home_data['ExterCond'].astype(str))
+home_data['ExterCond_encoded'] = le.fit_transform(
+    home_data['ExterCond'].astype(str))
 # home_data['BsmtCond_encoded'] = le.fit_transform(home_data['BsmtCond'].astype(str))
 # home_data['HeatingQC_encoded'] = le.fit_transform(home_data['HeatingQC'].astype(str))
 
@@ -56,26 +62,26 @@ features = ['LotArea',
             'BedroomAbvGr',
             'TotRmsAbvGrd',
             'MSZoning_encoded',
-#             'LotFrontage',
-#             'Street_encoded',
-#             'Alley_encoded',
-#             'Utilities_encoded',
+            #             'LotFrontage',
+            #             'Street_encoded',
+            #             'Alley_encoded',
+            #             'Utilities_encoded',
             'LandSlope_encoded',
             'Neighborhood_encoded',
             'Condition1_encoded',
-#             'Condition2_encoded',
-#             'BldgType_encoded',
-#             'HouseStyle_encoded',
+            #             'Condition2_encoded',
+            #             'BldgType_encoded',
+            #             'HouseStyle_encoded',
             'OverallQual_encoded',
             'OverallCond_encoded',
-#             'RoofMatl_encoded',
-#             'ExterQual_encoded',
+            #             'RoofMatl_encoded',
+            #             'ExterQual_encoded',
             'ExterCond_encoded',
-#             'BsmtCond_encoded',
-#             'HeatingQC_encoded',
-#             '1stFlrSF',
-#             '2ndFlrSF'
-           ]
+            #             'BsmtCond_encoded',
+            #             'HeatingQC_encoded',
+            #             '1stFlrSF',
+            #             '2ndFlrSF'
+            ]
 X = home_data[features]
 
 # Split into validation and training data
@@ -89,14 +95,16 @@ iowa_model.fit(train_X, train_y)
 # Make validation predictions and calculate mean absolute error
 val_predictions = iowa_model.predict(val_X)
 val_mae = mean_absolute_error(val_predictions, val_y)
-print("Validation MAE when not specifying max_leaf_nodes: {:,.0f}".format(val_mae))
+print(
+    "Validation MAE when not specifying max_leaf_nodes: {:,.0f}".format(val_mae))
 
 # Using best value for max_leaf_nodes
 iowa_model = DecisionTreeRegressor(max_leaf_nodes=100, random_state=1)
 iowa_model.fit(train_X, train_y)
 val_predictions = iowa_model.predict(val_X)
 val_mae = mean_absolute_error(val_predictions, val_y)
-print("Validation MAE for best value of max_leaf_nodes: {:,.0f}".format(val_mae))
+print(
+    "Validation MAE for best value of max_leaf_nodes: {:,.0f}".format(val_mae))
 
 # Define the model. Set random_state to 1
 rf_model = RandomForestRegressor(random_state=1)
@@ -118,14 +126,21 @@ test_data_path = '../input/test.csv'
 # read test data file using pandas
 test_data = pd.read_csv(test_data_path)
 
-test_data['MSZoning_encoded'] = le.fit_transform(test_data['MSZoning'].astype(str))
-test_data['LandSlope_encoded'] = le.fit_transform(test_data['LandSlope'].astype(str))
-test_data['Neighborhood_encoded'] = le.fit_transform(test_data['Neighborhood'].astype(str))
+test_data['MSZoning_encoded'] = le.fit_transform(
+    test_data['MSZoning'].astype(str))
+test_data['LandSlope_encoded'] = le.fit_transform(
+    test_data['LandSlope'].astype(str))
+test_data['Neighborhood_encoded'] = le.fit_transform(
+    test_data['Neighborhood'].astype(str))
 
-test_data['Condition1_encoded'] = le.fit_transform(test_data['Condition1'].astype(str))
-test_data['OverallQual_encoded'] = le.fit_transform(test_data['OverallQual'].astype(str))
-test_data['OverallCond_encoded'] = le.fit_transform(test_data['OverallCond'].astype(str))
-test_data['ExterCond_encoded'] = le.fit_transform(test_data['ExterCond'].astype(str))
+test_data['Condition1_encoded'] = le.fit_transform(
+    test_data['Condition1'].astype(str))
+test_data['OverallQual_encoded'] = le.fit_transform(
+    test_data['OverallQual'].astype(str))
+test_data['OverallCond_encoded'] = le.fit_transform(
+    test_data['OverallCond'].astype(str))
+test_data['ExterCond_encoded'] = le.fit_transform(
+    test_data['ExterCond'].astype(str))
 
 test_data.fillna(0)
 
@@ -133,12 +148,12 @@ test_data.fillna(0)
 # The list of columns is stored in a variable called features
 test_X = test_data[features]
 
-# make predictions which we will submit. 
+# make predictions which we will submit.
 test_preds = rf_model_on_full_data.predict(test_X)
 
 # The lines below shows how to save predictions in format used for competition scoring
 # Just uncomment them.
 
 output = pd.DataFrame({'Id': test_data.Id,
-                      'SalePrice': test_preds})
+                       'SalePrice': test_preds})
 output.to_csv('submission.csv', index=False)
